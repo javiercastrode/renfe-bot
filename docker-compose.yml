@@ -11,7 +11,6 @@ services:
         image: ghcr.io/javiercastrode/renfe-bot:latest
         env_file: .env # Contains the Telegram Bot API keys
         environment:
-            - BOT_TOKEN=${BOT_TOKEN}
             - TZ=Europe/Madrid # Adjust to location
         healthcheck:
           test: ["CMD-SHELL", "test $$(expr $$(date +%s) - $$(stat -c %Y /tmp/bot_heartbeat 2>/dev/null || echo 0)) -lt 60"]
