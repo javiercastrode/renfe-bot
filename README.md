@@ -17,7 +17,9 @@ available when someone cancels their reservation. It promptly notifies users
 when there are tickets available for purchase. The bot supports a Telegram
 chatbot interface for enhanced user interaction.
 
-## Quick Start in Docker Linux
+## How to run
+
+### Option A: Quick Start in Docker Linux
 
 Create a new Telegram Bot in @BotFather and insert the API key in the following command.
 
@@ -25,9 +27,7 @@ Create a new Telegram Bot in @BotFather and insert the API key in the following 
 mkdir renfe-bot && cd renfe-bot && curl -O https://raw.githubusercontent.com/javiercastrode/renfe-bot/refs/heads/master/docker-compose.yml && echo "BOT_TOKEN=InsertYourTokenHere" > .env && sudo docker compose up -d
 ```
 
-## How to run
-
-### Option A: Running normally in your computer
+### Option B: Running normally in your computer
 
 #### Requirements
 
@@ -48,10 +48,9 @@ Install the required dependencies using the following command
 pip install -r requirements.txt
 ```
 
-Create a new Telegram Bot in @BotFather and insert the API key in the following command. Run the bot by executing it with the command. 
+Create a new Telegram Bot in @BotFather and insert the API key when running the following command, it will remember it.
 
 ```bash
-BOT_TOKEN=InsertYourTokenHere
 PYTHONPATH=src/
 python src/bot.py
 ```
@@ -59,7 +58,6 @@ python src/bot.py
 or this one if you are on Windows command prompt
 
 ```bash
-setx BOT_TOKEN InsertYourTokenHere
 setx PYTHONPATH src/
 python src/bot.py
 ```
