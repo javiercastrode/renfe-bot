@@ -1,3 +1,4 @@
+name: renfe-bot
 services:
     renfe-bot:
         read_only: true
