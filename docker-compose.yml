@@ -1,0 +1,38 @@
+services:
+    renfe-bot:
+        read_only: true
+        user: "9002:9002" # Adjust UID and GID to host
+        volumes:
+            - type: tmpfs
+              target: /tmp
+              tmpfs:
+                size: 10m # max size for the healthcheck log volume
+        image: renfe-bot
+        env_file: .env # Contains the Telegram Bot API keys
+        environment:
+            - BOT_TOKEN=${BOT_TOKEN}
+            - TZ=Europe/Madrid # Adjust to location
+        healthcheck:
+          test: ["CMD-SHELL", "test $$(expr $$(date +%s) - $$(stat -c %Y /tmp/bot_heartbeat 2>/dev/null || echo 0)) -lt 60"]
+          interval: 30s
+          timeout: 5s
+          retries: 3
+          start_period: 10s
+        restart: unless-stopped
+        cap_drop:
+            - ALL
+        security_opt:
+            - no-new-privileges:true
+        deploy:
+          resources:
+            limits: # Limits can be adjusted
+              cpus: '0.50'
+              memory: 256M
+            reservations:
+              # cpus: '0.25'
+              memory: 32M
+        logging:
+          driver: "json-file"
+          options:
+            max-size: "10m"   # Rotates the log once it hits 10 Megabytes
+            max-file: "3"     # Retains a maximum of 3 historical log files (Total max 30MB)
