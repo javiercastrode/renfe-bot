@@ -40,7 +40,7 @@ Follow the below steps to install and set up the Renfe-bot:
 
 Clone this repository to your local machine or download the code
 ```bash
-git clone git@github.com:javiercastrode/renfe-bot.git
+git clone https://github.com/javiercastrode/renfe-bot.git
 ```
 
 Install the required dependencies using the following command
