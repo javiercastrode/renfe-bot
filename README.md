@@ -21,7 +21,7 @@ chatbot interface for enhanced user interaction.
 
 ### Option A: Quick Start in Docker Linux
 
-Create a new Telegram Bot in @BotFather and insert the API key in the following command.
+Create a new Telegram Bot in [@BotFather](https://t.me/BotFather) and insert the API key in the following command.
 
 ```bash
 mkdir renfe-bot && cd renfe-bot && curl -O https://raw.githubusercontent.com/javiercastrode/renfe-bot/refs/heads/master/docker-compose.yml && echo "BOT_TOKEN=InsertYourTokenHere" > .env && sudo docker compose up -d
@@ -48,7 +48,7 @@ Install the required dependencies using the following command
 pip install -r requirements.txt
 ```
 
-Create a new Telegram Bot in @BotFather and insert the API key when running the following command, it will remember it.
+Create a new Telegram Bot in [@BotFather](https://t.me/BotFather) and insert the API key when running the following command, it will remember it.
 
 ```bash
 PYTHONPATH=src/
