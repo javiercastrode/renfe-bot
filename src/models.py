@@ -14,6 +14,7 @@ class StationRecord(BaseModel):
     name: str = Field(description="Station name")
     code: str = Field(description="Renfe code for this station")
 
+
 class TrainRideRecord(BaseModel):
     """Represents a Train ride."""
 
@@ -36,7 +37,7 @@ class TrainRideRecord(BaseModel):
             f"{self.arrival_time.strftime(date_format)} 🕙 - {self.price:.2f} €\n"
         )
 
-    def  _repr__(self):
+    def __repr__(self):
         date_format = "%d/%m/%Y %H:%M"
         hours, minutes = divmod(self.duration, 60)
         availability = "Available" if self.available else "Not Available"
@@ -47,27 +48,48 @@ class TrainRideRecord(BaseModel):
             f"{self.arrival_time.strftime(date_format)}, duration={duration_str}, "
             f"price={self.price:.2f} €, availability={availability})>")
 
+
 class TrainRideFilter(BaseModel):
     """Represents filtering criteria for train rides."""
     origin: str
     destination: str
 
     departure_date: datetime
-    max_duration_minutes: Optional[int] = None
 
+    # Añadidos los campos que el bot.py le está pasando
+    min_departure_hour: Optional[str] = None
+    max_departure_hour: Optional[str] = None
+
+    max_duration_minutes: Optional[int] = None
     max_price: Optional[float] = None
 
     def filter_rides(self, rides: List[TrainRideRecord]) -> List[TrainRideRecord]:
         """Filter a list of TrainRideRecord based on user preferences."""
         filtered_rides = []
         unavailable_rides = 0
+
         for ride in rides:
             if ride.origin != self.origin or ride.destination != self.destination:
                 continue
             if ride.departure_time.date() != self.departure_date.date():
                 continue
+
+            # Filtro por fecha/hora mínima global (fecha + hora exactas guardadas en departure_date)
             if ride.departure_time < self.departure_date:
                 continue
+
+            # NUEVO: Filtro por hora máxima
+            if self.max_departure_hour:
+                max_time = datetime.strptime(self.max_departure_hour, "%H:%M").time()
+                if ride.departure_time.time() > max_time:
+                    continue
+
+            # NUEVO: Filtro por hora mínima explícita (por si en un futuro se pasa independientemente)
+            if self.min_departure_hour:
+                min_time = datetime.strptime(self.min_departure_hour, "%H:%M").time()
+                if ride.departure_time.time() < min_time:
+                    continue
+
             if self.max_duration_minutes and ride.duration > self.max_duration_minutes:
                 continue
             if self.max_price and ride.price > self.max_price:
@@ -75,6 +97,7 @@ class TrainRideFilter(BaseModel):
             if not ride.available:
                 unavailable_rides += 1
                 continue
+
             filtered_rides.append(ride)
 
         if len(filtered_rides) == 0 and unavailable_rides == 0:
