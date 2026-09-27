@@ -1,5 +1,5 @@
 # renfe-bot
-![license](https://img.shields.io/github/license/emartinez-dev/renfe-bot.svg)
+![license](https://img.shields.io/github/license/javiercastrode/renfe-bot.svg)
 
 | Python Version Support | Supported Platforms |
 |-------------------------|---------------------|
