@@ -77,3 +77,4 @@ tzlocal==5.2
     # via dateparser
 urllib3==2.2.3
     # via requests
+aiohttp==3.12.15
