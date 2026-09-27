@@ -7,7 +7,7 @@ services:
               target: /tmp
               tmpfs:
                 size: 10m # max size for the healthcheck log volume
-        image: https://ghcr.io/javiercastrode/renfe-bot:latest
+        image: ghcr.io/javiercastrode/renfe-bot:latest
         env_file: .env # Contains the Telegram Bot API keys
         environment:
             - BOT_TOKEN=${BOT_TOKEN}
