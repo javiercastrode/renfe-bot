@@ -2,6 +2,8 @@ FROM python:3.12.7-slim
 
 WORKDIR /app
 
+LABEL org.opencontainers.image.source=https://github.com/javiercastrode/renfe-bot
+
 # Copiamos e instalamos dependencias
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt && \
